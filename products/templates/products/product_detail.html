@@ -1,0 +1,6 @@
+{% extends 'products/base.html' %}
+{% block page_content %}
+    <h1>{{ object.title }}</h1>
+    <img src="{{ object.image.url }}" height="200" />
+    <p class="well">{{ object.description }}</p>
+{% endblock %}
