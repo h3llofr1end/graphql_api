@@ -1,6 +1,61 @@
 {% extends 'products/base.html' %}
+
 {% block page_content %}
-    <h1>{{ object.title }}</h1>
-    <img src="{{ object.image.url }}" height="200" />
-    <p class="well">{{ object.description }}</p>
+
+    <div class="row">
+        <div class="col-md-4">
+            <img src="{{ object.image.url }}" width="100%" />
+        </div>
+        <div class="col-md-8">
+            <h2>{{ object.title }}</h1>
+            <div class="well">{{ object.description }}</div>
+            <div class="col-md-6">
+                <form class="order_form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount</label>
+                        <input type="text" name="amount" value="1" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-success js_submit_order">Order</button>
+                    </div>
+                </form>
+    
+                <div class="well success_order">
+                    <i class="glyphicon glyphicon-ok"></i>
+                    <h4>Заказ успешно оформлен</h4>
+                    <div class="js_user_text"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    var submitForm = function(){
+        $.post(
+            {% url 'submit_order' %},
+            JSON.stringify({
+                'email': $('input[name="email"]').val(),
+                'amount': $('input[name="amount"]').val(),
+                'product_id': {{ object.pk }}
+            })
+        ).done(function(msg){
+            $('.order_form').hide();
+            $('.js_user_text').text(msg.text);
+            $('.success_order').fadeIn(1500);
+        });
+    };
+
+    $('.js_submit_order').click(function(e){
+        e.preventDefault();
+        submitForm();
+    });
+    
+</script>
 {% endblock %}

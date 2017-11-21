@@ -1,3 +1,14 @@
 .main_page_content {
     margin-top: 70px;
 }
+
+.success_order {
+    text-align: center;
+    display: none;
+}
+
+.success_order > i {
+    font-size: 5em;
+    margin-bottom: 15px;
+    color: green;
+}

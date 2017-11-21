@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from django.views import View
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.http import JsonResponse
 
 from . import models
 # Create your views here.
@@ -12,3 +14,13 @@ class ProductsListView(ListView):
 
 class ProductsDetailView(DetailView):
     model = models.Product
+
+
+class SubmitOrderView(View):
+    def post(self, request, *args, **kwargs):
+        print(request.body)
+        # TODO: save order
+        return JsonResponse({
+    'status': 'ok',
+    'text': 'Ваш заказ оформлен и мы вам напишем в течении трёх часов.'
+    })
