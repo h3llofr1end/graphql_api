@@ -15,6 +15,10 @@ class ProductsListView(ListView):
 class ProductsDetailView(DetailView):
     model = models.Product
 
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        return qs.prefetch_related('similar_products')
+
 
 class SubmitOrderView(View):
     def post(self, request, *args, **kwargs):

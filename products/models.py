@@ -8,6 +8,13 @@ class Product(models.Model):
     category = models.ForeignKey('Category', related_name='products')
     image = models.ImageField(upload_to='products', null=True, blank=True)
 
+    similar_products = models.ManyToManyField(
+        'Product', 
+        null=True, 
+        blank=True, 
+        symmetrical=False
+    )
+
     def __str__(self):
         return self.title
 
